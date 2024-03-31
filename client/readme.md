@@ -21,102 +21,84 @@
 
 ## Step 2 - Add Reveal JavaScript API
 
-1 - Modify the `index.html` file to include the `infragistics.reveal.js` script at the bottom of the page just before the closing `</body>` tag.
+1 - Modify the `index.html` file to include the `infragistics.reveal.js`  and the Roboto fonts from Goggle script at the bottom of the page just before the closing `</body>` tag.
 
 ```html
-<script src="https://dl.revealbi.io/reveal/libs/[var:sdkVersion]/infragistics.reveal.js"></script>
+<script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
 ```
 
-2 - Install the remaining Reveal JavaScript API dependencies:
-
-- Jquery 2.2 or greater
+## Step 3 - Add the CSS for the Dashboard Container and Fonts
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+    .thumbnail-container {
+        display: flex;
+        flex-wrap: wrap;
+        overflow-y: scroll;
+        height: 600px; 
+        width: 190px;
+    }
+    .dashboard-item {
+        margin: 10px;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+    }
+    .dashboard-thumbnail {
+        height: 125px;
+        width: 150px;
+        position: relative;
+    }
+</style>
 ```
-
-- Day.js 1.8.15 or greater
-
-```html
-<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-```
-
-The final `index.html` files should look similar to this:
-
-```html title="index.html"
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reveal Sdk - HTML/JavaScript</title> 
-</head>
-<body>
-
-    // highlight-start
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>    
-    <script src="https://dl.revealbi.io/reveal/libs/[var:sdkVersion]/infragistics.reveal.js"></script>
-    // highlight-end
-</body>
-</html>
-```
-
-## Step 3 - Add the CSS for the Container Render
-
-
-## Step 3 - Initialize the Reveal view
-
-1 - Modify the `index.html` file and add a new `<div>` tag after the opening `<body>` tag, and set the `id` to `revealView`.
-
-```html
-<div id="revealView" style="height: 920px; width: 100%;"></div>
-```
-
-2 - Add a JavaScript `Script` tag at the bottom of the `index.html` file and initialize the `revealView`.
-
-```html
-<script type="text/javascript">
-    //highlight-next-line
-    var revealView = new $.ig.RevealView("#revealView");
-</script>
-```
-
-Next, we instantiate a new instance of the `RevealView` by creating a new `$.ig.RevealView` and passing in the `#revealView` selector.
 
 The final `index.html` file should look like this:
 
 ```html title="index.html"
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reveal Sdk - HTML/JavaScript</title> 
+    <title>Dashboard Thumbnails</title>
+    <script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+        .thumbnail-container {
+            display: flex;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+            height: 600px; 
+            width: 190px;
+        }
+        .dashboard-item {
+            margin: 10px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+        }
+        .dashboard-thumbnail {
+            height: 125px;
+            width: 150px;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
-    //highlight-start
-    <div id="revealView" style="height: 920px; width: 100%;"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>    
-    <script src="https://dl.revealbi.io/reveal/libs/[var:sdkVersion]/infragistics.reveal.js"></script>
-
-    <script type="text/javascript">
-        var revealView = new $.ig.RevealView("#revealView");
-    </script>
-    //highlight-end
+    <div class="thumbnail-container"></div>
 </body>
 </html>
 ```
 
-:::caution
 
-Clients apps must set the `$.ig.RevealSdkSettings.setBaseUrl("url-to-server");` to the server address hosting the dashboards if the client is being hosting on a different URL.
+2 - Add a JavaScript `Script` tag at the bottom of the `index.html` file.
 
-:::
+```html
+<script type="text/javascript">
+
+
+</script>
+```
+
+
 
 ## Step 4 - Run the Application
 
