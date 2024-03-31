@@ -1,15 +1,15 @@
 
-# Project Construction Guide Using Reveal BI SDK and Reveal SDK Dom Library
+# Creating the .NET Core Thumbnail Viewer
 
-This is a detailed step-by-step guide on how to construct the project.
+This step-by-step demonstrates how to build the .NET Core backend for a client-side thumbnail generator for Reveal dashboards.  This is generic backend code, it can be used with any HTML / JavaScript client, like pure HTML, Angular, Blazor, React, Vue, etc. 
 
-## Step 0: Create a new .NET Core Web API project in Visual Studio
+## Create a new .NET Core Web API project in Visual Studio
 
 - Start Visual Studio and create a new .NET Core Web API project.
 - After creating the project, create a folder named `Dashboards` in the project.
 - Download the file from [this link](https://github.com/jberes/ThumbnailBuilder/blob/main/Dashboards.zip), unzip it, and place the sample dashboards in the `Dashboards` folder. These sample dashboards will be used to render the thumbnails.
 
-## Step 1: Add the Reveal.Sdk and Reveal.Sdk.Dom Nuget packages
+## Add the Reveal.Sdk and Reveal.Sdk.Dom Nuget packages
 
 - Add the `Reveal.Sdk` and `Reveal.Sdk.Dom` Nuget packages to your project.
 - Then, add the following using statements to your `program.cs` file:
@@ -20,17 +20,16 @@ using Reveal.Sdk.Dom;
 using Reveal.Sdk.Dom.Visualizations;
 ```
 
-## Step 2: Add Controllers to the builder.services
+## Add Controllers to the builder.services
 
-- Add the `AddControllers()` method to the `builder.Services` in your `program.cs` file:
+- Add the `AddControllers()` method to the `builder.Services` in your `program.cs` file.  This is required to ensure that the necessary dependencies are registered for routing and handling HTTP requests in this app.
 
 ```csharp
 builder.Services.AddControllers();
 ```
-
 - Also add `AddEndpointsApiExplorer()` and `AddSwaggerGen()` methods to the `builder.Services`.
 
-## Step 3: Add a Cors policy
+## Add a Cors policy
 
 - Add a Cors policy that allows any origin, header, and method. This is necessary for accessing this API from your local machine:
 
@@ -49,7 +48,7 @@ builder.Services.AddCors(options =>
 app.UseCors("AllowAll");
 ```
 
-## Step 4: Add the UseAuthorization middleware
+## Add the UseAuthorization middleware
 
 - Add the `UseAuthorization()` middleware prior to the `useHttpsRedirection` that is added by the project template:
 
@@ -58,7 +57,7 @@ app.UseAuthorization();
 app.UseHttpsRedirection();
 ```
 
-## Step 6: Add a DashboardNames class
+## Add a DashboardNames class
 
 - Add a `DashboardNames` class to your `program.cs` file:
 
@@ -70,13 +69,11 @@ public class DashboardNames
 }
 ```
 
-## Step 7: Add an API to retrieve the information needed to render the thumbnail of the dashboard
+## Add an API to Retrieve the Thumbnail Info
 
-- Add an API to retrieve the information needed to render the thumbnail of the dashboard. The `GetInfoAsync` method will return the JSON of the requested dashboard with the full dashboard details.  This code defines an asynchronous HTTP GET endpoint in your application at the path `/dashboards/{name}/thumbnail`. This endpoint is designed to fetch and return information about a specific dashboard based on its name.  The request to this endpoint should be a GET request with the name of the dashboard embedded in the URL.
+The next step is to add an API to retrieve the information needed to render the thumbnail of the dashboard. 
 
-- `name`: This is a path parameter that should contain the name of the dashboard for which information is being requested.
-
-### Process
+- `name`: This is a path parameter that should contain the name of the dashboard for which information is being requested. The dashboards are the files you added to the `Dashboards` folder in this sample, or the location of the dasdhboards in your application. 
 
 1. The function first constructs the path to the dashboard file by concatenating the string "dashboards/" with the name of the dashboard and the extension ".rdash".
 2. It then checks if a file exists at the constructed path.
@@ -108,9 +105,9 @@ app.MapGet("/dashboards/{name}/thumbnail", async (string name) =>
 });
 ```
 
-## Step 8: Get a list of the Dashboard File Names from the Dashboards folder
+## Add an API to Retrieve your Dashboards
 
-- Get a list of the Dashboard File Names from the Dashboards folder, then use the `Reveal.Sdk.Dom` to get the name of the dashboard in the `Rdash`. The File Name and the Dashboard Name can be different, the actual file name is needed for the Thumbnail, but you want to display the Dashboard Name to the user.  This code defines an asynchronous HTTP GET endpoint in your application at the path `/dashboards/names`. This endpoint is designed to fetch and return a list of dashboard file names and their corresponding titles from the `Dashboards` folder. The request to this endpoint should be a GET request.
+Next you need to get a list of the dashboards.  This API uses the `Reveal.Sdk.Dom` to get the name of the dashboard in the `Rdash` file.  The File Name or the `.Rdash` and the Dashboard Name can be different - the actual `.Rdash` file name is needed get the file in the `/dashboards/{name}/thumbnail` API to retrieve the Thumbnail info, and the Reveal.Sdk.Dom will pull the `Title` property needed for the display name.
 
 1. The function first constructs the path to the `Dashboards` folder in the current directory.
 2. It then retrieves a list of all files in the `Dashboards` folder.
@@ -166,4 +163,4 @@ app.MapGet("/dashboards/names", () =>
 .ProducesProblem(StatusCodes.Status500InternalServerError);
 ```
 
-Finally, run your application with `app.Run();`. This completes the construction of your project using the Reveal BI SDK and the Reveal SDK Dom library. Remember to handle exceptions and errors appropriately to ensure your application runs smoothly.
+Finally, run your application with `app.Run();`. When you run the application, you'll see the default Swagger UI.  You can test both the `/dashboards/names` and the `"/dashboards/{name}/thumbnail` APIs.  Use one of the dashboard names, like `Healthcare` or `Marketing` to see the results in the Swagger UI.
