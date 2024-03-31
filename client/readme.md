@@ -60,6 +60,7 @@ The final `index.html` file should look like this:
 <html>
 <head>
     <title>Dashboard Thumbnails</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
@@ -88,25 +89,87 @@ The final `index.html` file should look like this:
 </html>
 ```
 
+## Step 4 - Add a JavaScript `Script` tag at the bottom of the `index.html` file
 
-2 - Add a JavaScript `Script` tag at the bottom of the `index.html` file.
+To ensure our JavaScript runs after the HTML document has been fully loaded, we wrap our code in `$(document).ready()`:
 
 ```html
-<script type="text/javascript">
+<script>
+    $(document).ready(function() {
+        // Our code will go here
+    });
+</script>
+
+```
+
+## Step 5 - Fetching Dashboard Names
+Use $.get in an asynchronous request to fetch dashboard names from the URL running either the .NET Core or Node server. 
+
+```javascript
+$.get("https://localhost:7273/dashboards/names", function(dashboards) {
+    // Processing each dashboard goes here
+});
+```
 
 
+## Step 6: Iterating Over Dashboards
+For each dashboard received, we create new HTML elements to display its name and a placeholder for its thumbnail:
+
+```javascript
+dashboards.forEach(function(dashboard) {
+    var dashboardContainer = $('<div/>', { class: 'dashboard-item' }).appendTo('.thumbnail-container');
+    var thumbnailDiv = $('<div/>', {
+        class: 'dashboard-thumbnail'
+    }).appendTo(dashboardContainer);
+
+    var titleDiv = $('<div/>').text(dashboard.dashboardTitle).appendTo(dashboardContainer);
+    // Fetching thumbnail will go here
+});
+```
+
+## Step 7: Fetching and Displaying Thumbnails
+For each dashboard, we fetch its thumbnail using another $.get request. Upon success, we initialize a thumbnail view and set its dashboard info:
+
+```javascript
+$.get("https://localhost:7273/dashboards/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
+    var thumbnailView = new $.ig.RevealDashboardThumbnailView(thumbnailDiv[0]);
+    console.log("Thumbnail view initialized: ", data.info);
+    thumbnailView.dashboardInfo = data.info;
+});
+```
+
+Putting it all together, your full script within the HTML file will look like this:
+
+```javascript
+<script>
+    $(document).ready(function() {
+        $.get("https://localhost:7273/dashboards/names", function(dashboards) {
+            dashboards.forEach(function(dashboard) {
+                var dashboardContainer = $('<div/>', { class: 'dashboard-item' }).appendTo('.thumbnail-container');
+                var thumbnailDiv = $('<div/>', {
+                    class: 'dashboard-thumbnail'
+                }).appendTo(dashboardContainer);
+
+                var titleDiv = $('<div/>').text(dashboard.dashboardTitle).appendTo(dashboardContainer);
+
+                $.get("https://localhost:7273/dashboards/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
+                    var thumbnailView = new $.ig.RevealDashboardThumbnailView(thumbnailDiv[0]);
+                    console.log("Thumbnail view initialized: ", data.info);
+                    thumbnailView.dashboardInfo = data.info;
+                });
+            });
+        });
+    });
 </script>
 ```
 
 
-
-## Step 4 - Run the Application
+## Step 8 - Run the Application
 
 Double-click on the `index.html` file to launch the webpage in your default browser.
 
-![](images/angular-app-running.jpg)
 
-**Congratulations!** You have written your first Reveal SDK application.
+**Congratulations!** You have written an application that pulls thumbnails from your Reveal dashboards.  This is a very powerful tool that enables a how of exciting experiences in your BI applications using Reveal.
 
 :::info Get the Code
 
