@@ -164,3 +164,6 @@ app.MapGet("/dashboards/names", () =>
 ```
 
 Finally, run your application with `app.Run();`. When you run the application, you'll see the default Swagger UI.  You can test both the `/dashboards/names` and the `"/dashboards/{name}/thumbnail` APIs.  Use one of the dashboard names, like `Healthcare` or `Marketing` to see the results in the Swagger UI.
+
+
+The code for this application is on [GitHub](https://github.com/jberes/ThumbnailBuilder/tree/main/net-core).
