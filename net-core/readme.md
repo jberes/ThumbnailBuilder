@@ -17,7 +17,6 @@ This step-by-step demonstrates how to build the .NET Core backend for a client-s
 ```csharp
 using Reveal.Sdk;
 using Reveal.Sdk.Dom;
-using Reveal.Sdk.Dom.Visualizations;
 ```
 
 ## Add Controllers to the builder.services
