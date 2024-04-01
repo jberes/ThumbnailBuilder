@@ -21,7 +21,7 @@
 
 ## Step 2 - Add Reveal JavaScript API
 
-1 - Modify the `index.html` file to include the `infragistics.reveal.js`  and the Roboto fonts from Goggle script at the bottom of the page just before the closing `</body>` tag.
+1 - Modify the `index.html` file to include the `infragistics.reveal.js`. jQuery and the Roboto fonts from Goggle script at the bottom of the page just before the closing `</body>` tag.
 
 ```html
 <script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
@@ -54,7 +54,9 @@
 </style>
 ```
 
-## Step 4 - Add the <div> tag that will hold the Thumbnail images
+## Step 4 - Add Containter for Thumbnail Images
+
+This `div` tag is the target element for the `.thumbnail-container` that you just added in the CSS block.  It is where your thumbnails will render.
 
 ``` html
 <body>
@@ -98,9 +100,9 @@ The final `index.html` file should look like this:
 </html>
 ```
 
-## Step 5 - Add a JavaScript `Script` tag at the bottom of the `index.html` file
+## Step 5 - Add a JavaScript Block 
 
-To ensure our JavaScript runs after the HTML document has been fully loaded, we wrap our code in `$(document).ready()`:
+To ensure our JavaScript runs after the HTML document has been fully loaded, we wrap our code in `$(document).ready()` in the `<head>` section of your HTML file.
 
 ```html
 <script>
@@ -111,7 +113,7 @@ To ensure our JavaScript runs after the HTML document has been fully loaded, we 
 
 ```
 
-## Step 6 - Fetching Dashboard Names
+## Step 6 - Fetch Dashboard Names
 Use $.get in an asynchronous request to fetch dashboard names from the URL running either the .NET Core or Node server. 
 
 ```javascript
@@ -121,7 +123,7 @@ $.get("https://localhost:7273/dashboards/names", function(dashboards) {
 ```
 
 
-## Step 7: Iterating Over Dashboards
+## Step 7: Iterating Over Fetched Dashboards
 For each dashboard received, we create new HTML elements to display its name and a placeholder for its thumbnail:
 
 ```javascript
@@ -179,8 +181,9 @@ Putting it all together, your full script within the HTML file will look like th
 </style>
     <script>
         $(document).ready(function() {
-            $.get("https://localhost:7273/dashboards/names", function(dashboards) {
-                dashboards.forEach(function(dashboard) {
+                var baseUrl = "https://localhost:7273/dashboards";
+                $.get(baseUrl + "/names", function(dashboards) {
+                    dashboards.forEach(function(dashboard) {
                     var dashboardContainer = $('<div/>', { class: 'dashboard-item' }).appendTo('.thumbnail-container');
                     var thumbnailDiv = $('<div/>', {
                         class: 'dashboard-thumbnail'
@@ -188,7 +191,7 @@ Putting it all together, your full script within the HTML file will look like th
 
                     var titleDiv = $('<div/>').text(dashboard.dashboardTitle).appendTo(dashboardContainer);
 
-                    $.get("https://localhost:7273/dashboards/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
+                    $.get(baseUrl + "/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
                         var thumbnailView = new $.ig.RevealDashboardThumbnailView(thumbnailDiv[0]);
                         console.log("Thumbnail view initialized: ", data.info);
                         thumbnailView.dashboardInfo = data.info;
@@ -204,11 +207,9 @@ Putting it all together, your full script within the HTML file will look like th
 </html>
 ```
 
-
 ## Step 9 - Run the Application
 
-Double-click on the `index.html` file to launch the webpage in your default browser.
-
+Double-click on the `index.html` file to launch the webpage in your default browser. In order for your thumbnails to render, ensure that you have a server running and you are correctly pointing your APIs to that server by setting the `baseUrl` property in the JavaScript you just added.
 
 **Congratulations!** You have written an application that pulls thumbnails from your Reveal dashboards.  This is a very powerful tool that enables a how of exciting experiences in your BI applications using Reveal.
 
