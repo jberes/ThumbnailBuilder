@@ -106,7 +106,7 @@ To ensure our JavaScript runs after the HTML document has been fully loaded, we 
 ```html
 <script>
     $(document).ready(function() {
-        // Our code will go here
+        var baseUrl = "https://localhost:7122/dashboards";
     });
 </script>
 
@@ -116,7 +116,7 @@ To ensure our JavaScript runs after the HTML document has been fully loaded, we 
 Use $.get in an asynchronous request to fetch dashboard names from the URL running either the .NET Core or Node server. 
 
 ```javascript
-$.get("https://localhost:7273/dashboards/names", function(dashboards) {
+$.get(baseUrl + "/names", function(dashboards) {
     // Processing each dashboard goes here
 });
 ```
@@ -141,7 +141,7 @@ dashboards.forEach(function(dashboard) {
 For each dashboard, we fetch its thumbnail using another $.get request. Upon success, we initialize a thumbnail view and set its dashboard info:
 
 ```javascript
-$.get("https://localhost:7273/dashboards/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
+$.get(baseUrl + "/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
     var thumbnailView = new $.ig.RevealDashboardThumbnailView(thumbnailDiv[0]);
     console.log("Thumbnail view initialized: ", data.info);
     thumbnailView.dashboardInfo = data.info;
@@ -156,7 +156,6 @@ Putting it all together, your full script within the HTML file will look like th
 <head>
     <title>Dashboard Thumbnails</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
 <style>
     @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
