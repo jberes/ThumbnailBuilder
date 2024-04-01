@@ -3,7 +3,6 @@
 <head>
     <title>Dashboard Thumbnails</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
@@ -28,7 +27,7 @@
     <script>
         $(document).ready(function() {
 
-            var baseUrl = "http://localhost:5102/dashboards"; 
+            var baseUrl = "https://localhost:7122/dashboards"; 
 
             $.get(baseUrl + "/names", function(dashboards) {
                 dashboards.forEach(function(dashboard) {
