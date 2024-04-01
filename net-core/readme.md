@@ -27,7 +27,6 @@ using Reveal.Sdk.Dom.Visualizations;
 ```csharp
 builder.Services.AddControllers();
 ```
-- Also add `AddEndpointsApiExplorer()` and `AddSwaggerGen()` methods to the `builder.Services`.
 
 ## Add a Cors policy
 

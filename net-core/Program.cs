@@ -1,27 +1,13 @@
-
-
-// step 0, create a new .NET Core Web API project in Visual Studio.  After
-// you have created this project, create a folder called 
-// Dashboards in the project.  Then, download this file - https://github.com/jberes/ThumbnailBuilder/blob/main/Dashboards.zip - 
-// unzip and place the sample dashboards in the Dashboards folder.
-// You will use these sample dashboards to render the thumbnails.
-
-
-// step 1, add the Reveal.Sdk and Reveal.Sdk.Dome Nuget packages,
-// then add the using statements program.cs
 using Reveal.Sdk;
 using Reveal.Sdk.Dom;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// step 2, AddControllers() to the builder.services
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// step 3, add a Cors policy that is necessary for accessing 
-// this API from your local machine
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -31,8 +17,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// step 4, after the builder.Build() statement, add the 
-// UseCors for the Cors policy that you added previously
 app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
@@ -41,14 +25,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// step 5, add the UseAuthorization middleware prior to the 
-// useHttpsRedirection that is added by the project template 
 app.UseAuthorization();
 app.UseHttpsRedirection();
 
-// step 7, add an API to retrieve the information needed to render the thumbnail
-// of the dashboard.  The GetInfoAsync will return the JSON of the 
-// requested dashboard with the full dashboard details
 app.MapGet("/dashboards/{name}/thumbnail", async (string name) =>
 {
     var path = "dashboards/" + name + ".rdash";
@@ -64,11 +43,6 @@ app.MapGet("/dashboards/{name}/thumbnail", async (string name) =>
     }
 });
 
-// step 8, Get a list of the Dashboard File Names from the Dashboards
-// folder, then use the Reveal.Sdk.Dom to get the name of the dashboard
-// in the Rdash.  The File Name and the Dashboard Name can be different, the 
-// actual file name is needed for the Thumbnail, but you want to display 
-// the Dashboard Name to the user
 app.MapGet("/dashboards/names", () =>
 {
     try
@@ -108,7 +82,6 @@ app.MapGet("/dashboards/names", () =>
 
 app.Run();
 
-// step 6, add a DashboardNames class
 public class DashboardNames
 {
     public string? DashboardFileName { get; set; }

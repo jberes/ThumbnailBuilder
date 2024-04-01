@@ -27,7 +27,10 @@
     </style>
     <script>
         $(document).ready(function() {
-            $.get("https://localhost:7273/dashboards/names", function(dashboards) {
+
+            var baseUrl = "http://localhost:5102/dashboards"; 
+
+            $.get(baseUrl + "/names", function(dashboards) {
                 dashboards.forEach(function(dashboard) {
                     var dashboardContainer = $('<div/>', { class: 'dashboard-item' }).appendTo('.thumbnail-container');
                     var thumbnailDiv = $('<div/>', {
@@ -36,7 +39,7 @@
 
                     var titleDiv = $('<div/>').text(dashboard.dashboardTitle).appendTo(dashboardContainer);
 
-                    $.get("https://localhost:7273/dashboards/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
+                    $.get(baseUrl + "/" + dashboard.dashboardFileName + "/thumbnail", function(data) {
                         var thumbnailView = new $.ig.RevealDashboardThumbnailView(thumbnailDiv[0]);
                         console.log("Thumbnail view initialized: ", data.info);
                         thumbnailView.dashboardInfo = data.info;
