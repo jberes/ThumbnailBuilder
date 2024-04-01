@@ -25,6 +25,7 @@
 
 ```html
 <script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
 ```
 
@@ -51,6 +52,14 @@
         position: relative;
     }
 </style>
+```
+
+## Step 4 - Add the <div> tag that will hold the Thumbnail images
+
+``` html
+<body>
+    <div class="thumbnail-container"></div>
+</body>
 ```
 
 The final `index.html` file should look like this:
@@ -89,7 +98,7 @@ The final `index.html` file should look like this:
 </html>
 ```
 
-## Step 4 - Add a JavaScript `Script` tag at the bottom of the `index.html` file
+## Step 5 - Add a JavaScript `Script` tag at the bottom of the `index.html` file
 
 To ensure our JavaScript runs after the HTML document has been fully loaded, we wrap our code in `$(document).ready()`:
 
@@ -102,7 +111,7 @@ To ensure our JavaScript runs after the HTML document has been fully loaded, we 
 
 ```
 
-## Step 5 - Fetching Dashboard Names
+## Step 6 - Fetching Dashboard Names
 Use $.get in an asynchronous request to fetch dashboard names from the URL running either the .NET Core or Node server. 
 
 ```javascript
@@ -112,7 +121,7 @@ $.get("https://localhost:7273/dashboards/names", function(dashboards) {
 ```
 
 
-## Step 6: Iterating Over Dashboards
+## Step 7: Iterating Over Dashboards
 For each dashboard received, we create new HTML elements to display its name and a placeholder for its thumbnail:
 
 ```javascript
@@ -127,7 +136,7 @@ dashboards.forEach(function(dashboard) {
 });
 ```
 
-## Step 7: Fetching and Displaying Thumbnails
+## Step 8: Fetching and Displaying Thumbnails
 For each dashboard, we fetch its thumbnail using another $.get request. Upon success, we initialize a thumbnail view and set its dashboard info:
 
 ```javascript
@@ -196,7 +205,7 @@ Putting it all together, your full script within the HTML file will look like th
 ```
 
 
-## Step 8 - Run the Application
+## Step 9 - Run the Application
 
 Double-click on the `index.html` file to launch the webpage in your default browser.
 
