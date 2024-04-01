@@ -27,7 +27,7 @@
     <script>
         $(document).ready(function() {
 
-            var baseUrl = "https://localhost:7122/dashboards"; 
+            var baseUrl = "http://localhost:7122/dashboards"; 
 
             $.get(baseUrl + "/names", function(dashboards) {
                 dashboards.forEach(function(dashboard) {
