@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const { RdashDocument } = require('@revealbi/dom');
 
-
 const app = express();
 app.use(cors());
 
@@ -32,7 +31,7 @@ app.get("/dashboards/:name/thumbnail", async (req, resp) => {
     const name = req.params.name;
     const path = `dashboards/${name}.rdash`;
     if (fs.existsSync(path)) {
-        const db = new dashboard(path);
+        const db = new Dashboard(path);
         console.log(db);
         //const info = await db.getInfoAsync(path.basename(path, '.rdash'));
         //resp.status(200).json(info);
