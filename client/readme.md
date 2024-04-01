@@ -24,9 +24,8 @@
 1 - Modify the `index.html` file to include the `infragistics.reveal.js`. jQuery and the Roboto fonts from Goggle script at the bottom of the page just before the closing `</body>` tag.
 
 ```html
-<script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+<script src="https://dl.revealbi.io/reveal/libs/1.6.4/infragistics.reveal.js"></script>
 ```
 
 ## Step 3 - Add the CSS for the Dashboard Container and Fonts
