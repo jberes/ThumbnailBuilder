@@ -3,6 +3,10 @@
 
 This step-by-step demonstrates how to build the .NET Core backend for a client-side thumbnail generator for Reveal dashboards.  This is generic backend code, it can be used with any HTML / JavaScript client, like pure HTML, Angular, Blazor, React, Vue, etc. 
 
+This video supports this tutorial on how to create dashboard thumbnails from your Reveal dashboards.
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/X8Vngu33b9I/0.jpg)](https://www.youtube.com/watch?v=X8Vngu33b9I)
+
 ## Create a new .NET Core Web API project in Visual Studio
 
 - Start Visual Studio and create a new .NET Core Web API project.
