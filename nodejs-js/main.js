@@ -1,3 +1,5 @@
+// .Info API not in NODE
+
 var express = require('express');
 var reveal = require('reveal-sdk-node');
 var cors = require('cors');
